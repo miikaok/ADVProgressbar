@@ -1,5 +1,4 @@
 <?php
-
 /**
  * *****************************
  * Advanced CLI PHP Progressbar
@@ -184,6 +183,15 @@ class ADVProgressbar
     public function getValue(): float
     {
         return floatval($this->value);
+    }
+
+    /**
+     * Gets the initial max of the progressbar object
+     * @return float
+     */
+    public function getInitialMax(): float
+    {
+        return floatval($this->initialmax);
     }
 
     /**
