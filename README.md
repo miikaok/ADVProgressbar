@@ -42,7 +42,7 @@ Result:
 
 ![Preview](https://i.imgur.com/AODnrv3.gif)
 
-Methods:
+## Methods:
 ```php
 //Increases the progressbar value by 1.
 $progressbar->step();
@@ -59,8 +59,17 @@ $progressbar->getValue();
 //Gets the max initial value.
 $progressbar->getInitialMax();
 
-//Redraws the progressbar.
+//Forces a redraw on the progressbar.
 $progressbar->update();
+
+//Enables the pause mode for the progressbar, pause can be removed by using any of the step methods or forcing a redraw.
+$progressbar->pauseProgressbar();
+
+//Terminates the progressbar and resets the object.
+$progressbar->terminateProgressbar();
+
+//Resets the progressbar object.
+$progressbar->resetProgressbar();
 ```
 
 
