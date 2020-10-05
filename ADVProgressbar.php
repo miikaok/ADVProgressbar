@@ -1,4 +1,5 @@
 <?php
+
 /**
  * *****************************
  * Advanced CLI PHP Progressbar
@@ -19,6 +20,7 @@ class ADVProgressbar
     private $starttime;
 
     private $value;
+    private $pause;
 
     /**
      * Constructor for the Advanced progressbar object
@@ -108,10 +110,7 @@ class ADVProgressbar
      * All the user accessible functions are below this comment block
      * **************************************************************
      * @author Miika Oja-Kaukola
-     * 
-     * @todo Create function that allows user to pause the progressbar
-     * @todo Create function that allows user to terminate the progressbar
-     * @todo Create function that allows user to reset the progressbar
+     * **************************************************************
      */
 
     /**
@@ -177,6 +176,41 @@ class ADVProgressbar
     }
 
     /**
+     * Terminates the progressbar and resets the object.
+     * @return void
+     */
+    function terminateProgressbar(): void
+    {
+        $this->resetProgressbar();
+        echo "\033[1K"; //Clear the row
+    }
+
+    /**
+     * Enables pause on the progressbar
+     * @return void
+     */
+    function pauseProgressbar(): void
+    {
+        if (!$this->pause) {
+            $this->pause = true;
+            $this->update();
+        } else {
+            trigger_error("Progressbar cannot be paused at line " . __LINE__ . ", because it is already paused!", E_USER_NOTICE);
+        }
+    }
+
+    /**
+     * Resets the whole progressbar object
+     * @return void
+     */
+    function resetProgressbar(): void
+    {
+        $this->value = 0;
+        unset($this->initialmax);
+        unset($this->style);
+    }
+
+    /**
      * Returns the current progressbar value
      * @return float
      */
@@ -200,7 +234,13 @@ class ADVProgressbar
      */
     public function update(): void
     {
-        echo ("\r" . $this->style->color . $this->constructProgressbar() . "\e[1m " . $this->constructIterationString() . $this->constructTimeString() . "\e[0m");
+        if ($this->pause) {
+            echo "\033[1K";
+            echo ("\r" . $this->style->color . $this->constructProgressbar() . "\e[1m " . $this->constructIterationString() . " [PAUSED]" . "\e[0m");
+            $this->pause = false; //Pause will be disabled after the first execution.
+        } else {
+            echo ("\r" . $this->style->color . $this->constructProgressbar() . "\e[1m " . $this->constructIterationString() . $this->constructTimeString() . "\e[0m");
+        }
     }
 }
 
