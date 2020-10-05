@@ -62,14 +62,14 @@ $progressbar->getInitialMax();
 //Forces a redraw on the progressbar.
 $progressbar->update();
 
-//Enables the pause mode for the progressbar, pause can be removed by using any of the step methods or forcing a redraw.
+//Enables the pause mode, it can be removed by using any of the step methods or forcing a redraw.
 $progressbar->pauseProgressbar();
-
-//Terminates the progressbar and resets the object.
-$progressbar->terminateProgressbar();
 
 //Resets the progressbar object.
 $progressbar->resetProgressbar();
+
+//Terminates the progressbar and resets the object.
+$progressbar->terminateProgressbar();
 ```
 
 
