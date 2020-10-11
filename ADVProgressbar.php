@@ -101,8 +101,10 @@ class ADVProgressbar
     private function constructTimeString(): string
     {
         $time_elapsed = time() - $this->starttime;
+        $eta = ($time_elapsed / $this->value) * $this->initialmax;
+        list($hours_eta, $mins_eta, $secs_eta) = array($eta / 3600, $eta / 60 % 60, $eta % 60);
         list($hours, $mins, $secs) = array($time_elapsed / 3600, $time_elapsed / 60 % 60, $time_elapsed % 60);
-        return " (" . sprintf('%02d:%02d:%02d', $hours, $mins, $secs) . ")";
+        return " (" . sprintf('%02d:%02d:%02d', $hours, $mins, $secs) . "/" . sprintf('%02d:%02d:%02d', $hours_eta, $mins_eta, $secs_eta) . ")";
     }
 
     /**
