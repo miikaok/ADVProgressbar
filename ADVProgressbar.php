@@ -14,7 +14,7 @@
 
 class ADVProgressbar
 {
-    
+
     private $style;
     private $initialmax;
     private $starttime;
@@ -86,11 +86,10 @@ class ADVProgressbar
      */
     private function constructIterationString(): string
     {
-        list($value, $initialmax, $datatype) = array($this->value, $this->initialmax, $this->style->datatype);
-        if (empty($datatype)) {
-            return ($value . "/" . $initialmax);
+        if (empty($this->style->datatype)) {
+            return ("{$this->value}/{$this->initialmax}");
         } else {
-            return ($value . "/" . $initialmax . " " . $datatype);
+            return ("{$this->value}/{$this->initialmax} {$this->style->datatype}");
         }
     }
 
@@ -237,11 +236,10 @@ class ADVProgressbar
     public function update(): void
     {
         if ($this->pause) {
-            echo "\033[1K";
-            echo ("\r" . $this->style->color . $this->constructProgressbar() . "\e[1m " . $this->constructIterationString() . " [PAUSED]" . "\e[0m");
+            echo ("\033[1K\r{$this->style->color}{$this->constructProgressbar()}\e[1m {$this->constructIterationString()} [PAUSED]\e[0m");
             $this->pause = false; //Pause will be disabled after the first execution.
         } else {
-            echo ("\r" . $this->style->color . $this->constructProgressbar() . "\e[1m " . $this->constructIterationString() . $this->constructTimeString() . "\e[0m");
+            echo ("\r{$this->style->color}{$this->constructProgressbar()}\e[1m {$this->constructIterationString()}{$this->constructTimeString()}\e[0m");
         }
     }
 }
